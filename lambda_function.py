@@ -1,6 +1,10 @@
 import requests
 
 def lambda_handler(event, context):
+    request_appId = event['session']['application']['applicationId']
+    if request_appId != 'amzn1.ask.skill.fd3393b0-b0c8-4b90-b31d-156a9501456f':
+        raise Exception('application id %s does not match.' % request_appId)
+
     response = requests.get('http://collablab.wpi.edu/lab/status')
 
     if response.ok:

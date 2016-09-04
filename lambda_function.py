@@ -5,16 +5,17 @@ def lambda_handler(event, context):
 
     if response.ok:
         data = response.json()
-        print data
 
         if data['open']:
-            members = data['members'].keys()
+
+            members = [member for _, member in data['members'].iteritems()]
+            print members
             members_speech = ', '.join(members)
             return {
                 'response': {
                     'outputSpeech': {
                         'type': 'PlainText',
-                        'text': 'The collab lab open. The current members are, ' + members_speech
+                        'text': 'The collab lab is open. The current members are, ' + members_speech
                     }
                 }
             }
@@ -23,7 +24,7 @@ def lambda_handler(event, context):
                 'response': {
                     'outputSpeech': {
                         'type': 'PlainText',
-                        'text': 'The collab lab closed'
+                        'text': 'The collab lab is closed'
                     }
                 }
             }
